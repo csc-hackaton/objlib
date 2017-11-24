@@ -1,0 +1,8 @@
+serialize\iulian\com\App.class
+serialize\iulian\com\Person.class
+serialize\iulian\com\PersonFactory.class
+serialize\iulian\com\PersonV1Builder.class
+serialize\iulian\com\Employee.class
+serialize\iulian\com\PersonV1.class
+serialize\iulian\com\PersonV2Builder.class
+serialize\iulian\com\PersonV2.class
