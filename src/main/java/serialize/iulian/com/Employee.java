@@ -1,87 +1,43 @@
 package serialize.iulian.com;
 
-import java.io.Serializable;
+import java.io.*;
 
-/** v1 */
+import lombok.*;
+
+@Getter(AccessLevel.PUBLIC)
+@Setter(AccessLevel.PUBLIC)
+@Builder(builderClassName = "EmployeeBuilder")
+
 public class Employee implements Serializable{
-    private static long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
     private String firstname;
+    private String email;
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    private void readObject(ObjectInputStream input) throws IOException, ClassNotFoundException {
+        try {
+            System.out.println("readObject");
+            input.defaultReadObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+    private void writeObject(ObjectOutputStream output) throws IOException {
+        try {
+            System.out.println("writeObject");
+            output.defaultWriteObject();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private Object readResolve() throws ObjectStreamException {
+        System.out.println("readResolve");
+        return new EmployeeBuilder().build();
+    }
+    private Object writeReplace() throws ObjectStreamException{
+        System.out.println("writeReplace");
+        return new EmployeeBuilder().build();
     }
 
-    public static void setSerialVersionUID(long serialVersionUID) {
-        Employee.serialVersionUID = serialVersionUID;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
 }
-/** v1->v2 compatible*/
-//public class Employee implements Serializable {
-//    private static long serialVersionUID = 1L;
-//    private String firstname;
-//    private String lastname;
-//
-//    public static long getSerialVersionUID() {
-//        return serialVersionUID;
-//    }
-//
-//    public static void setSerialVersionUID(long serialVersionUID) {
-//        Employee.serialVersionUID = serialVersionUID;
-//    }
-//
-//    public String getFirstname() {
-//        return firstname;
-//    }
-//
-//    public void setFirstname(String firstname) {
-//        this.firstname = firstname;
-//    }
-//
-//    public String getLastname() {
-//        return lastname;
-//    }
-//
-//    public void setLastname(String lastname) {
-//        this.lastname = lastname;
-//    }
-//}
-
-/** v2->v3 incompatible */
-
-//public class Employee implements Serializable{
-//    private static long serialVersionUID = 3L;
-//    private String firstname;
-//    private String email;
-//
-//    public static long getSerialVersionUID() {
-//        return serialVersionUID;
-//    }
-//
-//    public static void setSerialVersionUID(long serialVersionUID) {
-//        Employee.serialVersionUID = serialVersionUID;
-//    }
-//
-//    public String getFirstname() {
-//        return firstname;
-//    }
-//
-//    public void setFirstname(String firstname) {
-//        this.firstname = firstname;
-//    }
-//
-//    public String getEmail() {
-//        return email;
-//    }
-//
-//    public void setEmail(String email) {
-//        this.email = email;
-//    }
-//}
