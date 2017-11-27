@@ -1,12 +1,14 @@
 package serialize.iulian.com;
 
 import java.io.*;
-
 import lombok.*;
+
 
 @Getter(AccessLevel.PUBLIC)
 @Setter(AccessLevel.PUBLIC)
-@Builder(builderClassName = "EmployeeBuilder")
+@NoArgsConstructor
+@Builder(builderMethodName = "builder", builderClassName = "EmployeeBuilder")
+
 
 public class Employee implements Serializable{
     private static final long serialVersionUID = 2L;
@@ -32,12 +34,12 @@ public class Employee implements Serializable{
         }
     }
     private Object readResolve() throws ObjectStreamException {
-        System.out.println("readResolve");
-        return new EmployeeBuilder().build();
+        System.out.println("readResolve Iulian");
+        return Employee.builder().firstname("Iulian").build();
     }
     private Object writeReplace() throws ObjectStreamException{
         System.out.println("writeReplace");
-        return new EmployeeBuilder().build();
+        return Employee.builder().firstname("julian").build();
     }
 
 }
